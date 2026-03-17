@@ -1,9 +1,17 @@
 name: Copilot Setup Steps
 on: workflow_dispatch
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
-  setup:
+  copilot-setup-steps:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    environment: copilot
     steps:
       - uses: actions/checkout@v4
 
@@ -32,3 +40,10 @@ jobs:
       - name: Install Go dependencies
         run: |
           if [ -f go.mod ]; then go mod download; fi
+
+      - name: Install MCP server dependencies
+        run: |
+          npm install -g @supabase/mcp-server@latest || true
+          npm install -g mongodb-mcp-server@latest || true
+          npm install -g @vercel/mcp@latest || true
+          npm install -g @azure/mcp@latest || true
