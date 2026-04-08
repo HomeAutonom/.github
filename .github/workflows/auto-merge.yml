@@ -1,0 +1,19 @@
+name: Auto-merge Dependabot
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    if: github.actor == 'dependabot[bot]'
+    uses: Ai-road-4-You/enterprise-ci-cd/.github/workflows/auto-merge-dependabot.yml@main
+    with:
+      merge-method: "squash"
+      auto-merge-minor: true
+      auto-merge-major: false
+    secrets: inherit
